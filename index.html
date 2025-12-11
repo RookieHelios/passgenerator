@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CyberPass Gen</title>
+    <!-- Importing a "Hacker" font from Google -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* 1. GLOBAL RESET */
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        font-family: "JetBrains Mono", "Courier New", monospace; /* Hacker Font */
+      }
+
+      /* 2. BODY (Centers everything) */
+      body {
+        background-color: #0d1117; /* Very Dark Blue/Black */
+        color: #c9d1d9; /* Soft White text */
+        height: 100vh; /* Full screen height */
+        display: flex;
+        justify-content: center; /* Center Horizontal */
+        align-items: center; /* Center Vertical */
+      }
+
+      /* 3. THE CARD (The main box) */
+      .container {
+        width: 400px;
+        background-color: #161b22; /* Slightly lighter dark */
+        padding: 30px;
+        border-radius: 15px; /* Rounded corners */
+        border: 1px solid #30363d; /* Subtle border */
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.1); /* Green Glow */
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Space between items */
+      }
+
+      /* 4. HEADLINE */
+      .headline h1 {
+        text-align: center;
+        color: #fff;
+        font-size: 24px;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #238636; /* Green underline */
+        padding-bottom: 10px;
+      }
+
+      /* 5. INPUTS & LABELS */
+      label {
+        font-size: 14px;
+        color: #8b949e;
+      }
+
+      /* The Number Input Box */
+      input[type="number"] {
+        background-color: #0d1117;
+        border: 1px solid #30363d;
+        color: #00ff00; /* Matrix Green text */
+        padding: 8px;
+        border-radius: 5px;
+        width: 60px;
+        margin-left: 10px;
+        font-weight: bold;
+      }
+
+      /* The Checkbox Rows */
+      .checkbox-container div {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+      }
+
+      /* Make checkboxes larger */
+      input[type="checkbox"] {
+        accent-color: #238636; /* Green Checkmark */
+        transform: scale(1.2);
+        cursor: pointer;
+      }
+
+      /* 6. THE BUTTON (The cool part) */
+      button {
+        background: linear-gradient(
+          90deg,
+          #2ea043,
+          #238636
+        ); /* Gradient Green */
+        color: white;
+        border: none;
+        padding: 15px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s; /* Smooth animation */
+        width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      button:hover {
+        transform: scale(1.02); /* Slight zoom on hover */
+        box-shadow: 0 0 15px rgba(46, 160, 67, 0.6); /* Glow on hover */
+      }
+
+      /* 7. RESULT BOX */
+      .result-container p {
+        color: #8b949e;
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+
+      .end-result {
+        background-color: black;
+        border: 1px solid #238636;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        min-height: 60px; /* Keeps size steady */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .end-result h2 {
+        color: #00ff00; /* Matrix Green */
+        font-size: 20px;
+        word-break: break-all; /* Prevents text going off screen */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="headline">
+        <h1>🔐 CyberPass Gen</h1>
+      </div>
+
+      <div class="length-container">
+        <label>Password Length:</label>
+        <input type="number" value="12" id="userInput" />
+      </div>
+
+      <div class="checkbox-container">
+        <!-- I wrapped the text in <label> to make it clickable -->
+        <div>
+          <input type="checkbox" id="numCheck" />
+          <label for="numCheck">Include Numbers (0-9)</label>
+        </div>
+        <div>
+          <input type="checkbox" id="symCheck" />
+          <label for="symCheck">Include Symbols (!@#$)</label>
+        </div>
+      </div>
+
+      <div class="btn">
+        <button id="btn">Generate Password</button>
+      </div>
+
+      <div>
+        <div class="result-container">
+          <p>GENERATED PASSWORD:</p>
+        </div>
+        <div class="end-result">
+          <h2 id="finalPassword">...</h2>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <!-- YOUR JAVASCRIPT IS EXACTLY THE SAME -->
+  <script>
+    let userInput = document.getElementById("userInput");
+    let symCheck = document.getElementById("symCheck");
+    let numCheck = document.getElementById("numCheck");
+    let btn = document.getElementById("btn");
+    let result = document.getElementById("finalPassword");
+
+    const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numbers = "0123456789";
+    const symbols = "!@#$%^&*()_+";
+
+    btn.addEventListener("click", function () {
+      let allowedChars = letters;
+      if (numCheck.checked === true) {
+        allowedChars += numbers;
+      }
+      if (symCheck.checked === true) {
+        allowedChars += symbols;
+      }
+
+      let length = userInput.value;
+      let password = "";
+
+      for (let i = 0; i < length; i++) {
+        let randomIndex = Math.floor(Math.random() * allowedChars.length);
+        password += allowedChars[randomIndex];
+      }
+      result.innerHTML = password;
+    });
+  </script>
+</html>
